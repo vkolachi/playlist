@@ -16,6 +16,7 @@ public class Main {
         System.out.println(alanalbum.addSongToAlbums("Darkside",5.3));
 
         LinkedList<Song> myPlayList=new LinkedList<>();
+        System.out.println(arjitAlbum.addToListFromAlbum("lal ishq",myPlayList));
         System.out.println(arjitAlbum.addToListFromAlbum("kesaria",myPlayList));
         System.out.println(arjitAlbum.addToListFromAlbum(2,myPlayList));
 
@@ -33,6 +34,7 @@ public class Main {
         ListIterator<Song> itr=myPlayList.listIterator();
         System.out.print("NOW PLAYING:");
         System.out.println(itr.next());
+        boolean wasPlaying=true;
         Scanner sc=new Scanner(System.in);
         printMenu();
         boolean quit=false;
@@ -44,24 +46,45 @@ public class Main {
                     printMenu();
                     break;
                 case 2:
+                    if(wasPlaying==false){
+                        itr.next();
+                        wasPlaying=true;
+                    }
+
                     if(!itr.hasNext()){
                         System.out.println("YOUR AT END OF PLAYLIST");
                     }
                     else{
                         System.out.println("CURRENTLLY PLAYING"+itr.next());
+                        wasPlaying=true;
                     }
                     break;
                 case 3:
+                    if(wasPlaying==true){
+                        wasPlaying=false;
+                        itr.previous();}
+
                     if(!itr.hasPrevious()){
                         System.out.println("YOUR AT START OF PLAYLIST");
                     }
+
                     else{
                         System.out.println("CURRENTLLY PLAYING"+itr.previous());
+                        wasPlaying=false;
                     }
                     break;
                 case 4:
+                    if(wasPlaying==true){
+                        System.out.println("CURRENTLLY PLAYING"+itr.previous());
+                        wasPlaying=false;
+                    }
+                    else {
+                        System.out.println("CURRENTLLY PLAYING" + itr.next());
+                        wasPlaying = true;
+                    }
                     break;
                 case 5:
+                    itr.remove();
                     break;
                 case 6:
                     printSongs(myPlayList);
